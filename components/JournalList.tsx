@@ -41,7 +41,7 @@ export default function JournalList({
   };
 
   return (
-    <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2">
+    <div className="space-y-6 max-h-[500px]">
       {/* Display a message if there are no filtered entries */}
       {filteredEntries.length === 0 ? (
         <div className="text-center py-8 text-red-500 text-md font-semibold">
@@ -52,17 +52,17 @@ export default function JournalList({
         filteredEntries.map((entry: JournalEntry, index: number) => (
           <div
             key={index}
-            className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition border-pink-200 duration-200"
+            className="bg-white rounded-lg p-4 shadow-sm hover:shadow-md transition border-pink-200 duration-200"
           >
             <div className="flex justify-between items-start mb-4">
               <h3 className="text-xl font-bold text-black">{entry.title}</h3>
-                <span className="text-sm text-black">
+              <span className="text-sm text-black">
                 {new Date(entry.date).toLocaleDateString(undefined, {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
                 })}
-                </span>
+              </span>
             </div>
             <div
               className={`inline-block px-3 py-1 rounded-full text-sm font-medium mb-4 ${getCategoryColor(
