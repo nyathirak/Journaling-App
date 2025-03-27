@@ -96,39 +96,39 @@ export default function Journal({ initialEntries }: JournalProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-indigo-100 flex flex-col items-center py-12">
-      <main className="w-full max-w-7xl px-6">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-indigo-100 flex flex-col items-center py-6">
+      <main className="w-full max-w-7xl">
         {/* Header Section */}
-        <div className="flex justify-between items-center mb-10">
+        <div className="flex justify-between items-center mb-8">
           <h1 className="text-4xl font-extrabold text-gray-900">My Journal</h1>
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
-            className="px-5 py-2.5 bg-red-500 hover:bg-red-600 transition text-white font-semibold rounded-lg shadow-lg"
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 transition text-white font-semibold rounded-lg shadow-lg"
           >
             Logout
           </button>
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-8">
           {/* New Entry Form */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-[600px]">
-            <h2 className="text-3xl font-semibold text-gray-900 mb-6">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200 w-full h-[600px]">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-4">
               {entryToEdit ? "Edit Entry" : "New Entry"}
             </h2>
             <JournalForm onSubmit={handleNewEntry} entryToEdit={entryToEdit} />
           </div>
 
           {/* Entries List */}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-[600px] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200 w-full h-[600px] overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
               <h2 className="text-3xl font-semibold text-gray-900">
                 My Entries
               </h2>
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)} // Update filter state
-                className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 text-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                className="border border-gray-300 rounded-md px-3 py-2 text-gray-700 text-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               >
                 <option value="">All Categories</option>
                 <option value="personal">Personal</option>
@@ -147,7 +147,7 @@ export default function Journal({ initialEntries }: JournalProps) {
         </div>
 
         {/* Journal Summary */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full">
+        <div className="p-0 w-full">
           <JournalSummary entries={entries} />
         </div>
       </main>

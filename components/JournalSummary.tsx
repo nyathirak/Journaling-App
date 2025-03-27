@@ -21,7 +21,7 @@ interface JournalSummaryProps {
 }
 
 export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('90');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('365');
 
   // Filter entries based on the selected period
   const now = new Date();
