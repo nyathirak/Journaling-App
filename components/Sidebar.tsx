@@ -11,7 +11,7 @@ export default function Sidebar() {
   const isActive = (path: string) => router.pathname === path;
 
   return (
-    <aside className="bg-gradient-to-r from-pink-100 to-pink-100 p-6 shadow-md flex flex-col h-screen w-64 overflow-y-auto">
+    <aside className="bg-gradient-to-r from-pink-100 to-pink-100 p-6 shadow-md flex flex-col w-64 overflow-y-auto">
       {/* Logo */}
       <div className="mb-6">
         <a href="/" className="-m-2 p-2">

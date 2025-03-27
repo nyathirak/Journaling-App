@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import JournalSummary from "../components/JournalSummary";
-import { useSession } from "next-auth/react";
 
 // Interface defining the structure of a journal entry
-interface JournalSummary {
+interface JournalEntry {
   id: string;
   userId: number;
   title: string;
@@ -13,13 +12,29 @@ interface JournalSummary {
   date: string;
 }
 
-interface JournalSummaryProps {
-  entries: JournalSummary[];
+// Props interface for the Journal page
+interface JournalProps {
+  initialEntries: JournalEntry[];
 }
 
-export default function Summary({ entries }: JournalSummaryProps) {
-  const { data: session } = useSession();
-  // const [entries, setEntries] = useState<JournalEntry[]>(entries);
+export default function Summary({ initialEntries }: JournalProps) {
+  const [entries, setEntries] = useState<JournalEntry[]>(initialEntries);
+  const [filter, setFilter] = useState<string>("");
+
+  // Fetch journal entries
+  useEffect(() => {
+    const fetchJournals = async () => {
+      try {
+        const res = await fetch("/api/auth/journal");
+        const data = await res.json();
+        setEntries(data);
+      } catch (error) {
+        console.error("Error fetching journals:", error);
+      }
+    };
+
+    fetchJournals();
+  }, []);
 
   return (
     <div className="flex min-h-screen bg-white">
