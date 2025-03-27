@@ -1,27 +1,32 @@
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
+// Interface defining the structure of a journal entry
 interface JournalEntry {
-  id: string;
+  id: string; 
   userId: number;
-  title: string;
+  title: string; 
   content: string;
   category: string;
-  createdAt: string;
+  date: string;
 }
 
+// Props interface for the JournalForm component
 interface JournalFormProps {
   onSubmit: (entry: JournalEntry) => void;
   entryToEdit?: JournalEntry | null;
 }
+
 export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps) {
+
+  // Managing state entry being created or edited
   const [entry, setEntry] = useState<JournalEntry>({
     id: '',
     userId: 0,
     title: '',
     content: '',
     category: 'personal',
-    createdAt: '',
+    date: '',
   });
 
   useEffect(() => {
@@ -30,17 +35,17 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
     }
   }, [entryToEdit]);
 
+  // Function to handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(entry);
-    
     Swal.fire("Success!", "Your journal entry has been saved!", "success");
-
     setEntry({ ...entry, title: '', content: '', category: 'personal' });
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Title input field */}
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-black mb-1">
           Title
@@ -55,6 +60,8 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
           required
         />
       </div>
+
+      {/* Category dropdown */}
       <div>
         <label htmlFor="category" className="block text-sm font-medium text-black mb-1">
           Category
@@ -84,6 +91,7 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
           required
         />
       </div>
+      {/* Dynamic Submit/Edit button */}
       <button
         type="submit"
         className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-medium hover:from-pink-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transform transition duration-200 hover:scale-[1.02]"

@@ -1,27 +1,31 @@
-import { useState, useEffect } from 'react';
-import JournalForm from '../components/JournalForm';
-import JournalList from '../components/JournalList';
+import { useState, useEffect } from "react";
 import { signOut } from "next-auth/react";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
+import JournalForm from "../components/JournalForm";
+import JournalList from "../components/JournalList";
+import JournalSummary from "../components/JournalSummary";
 
+// Interface defining the structure of a journal entry
 interface JournalEntry {
   id: string;
   userId: number;
   title: string;
   content: string;
   category: string;
-  createdAt: string;
+  date: string;
 }
 
+// Props interface for the Journal page
 interface JournalProps {
   initialEntries: JournalEntry[];
 }
 
 export default function Journal({ initialEntries }: JournalProps) {
   const [entries, setEntries] = useState<JournalEntry[]>(initialEntries);
-  const [filter, setFilter] = useState<string>('');
+  const [filter, setFilter] = useState<string>("");
   const [entryToEdit, setEntryToEdit] = useState<JournalEntry | null>(null);
 
+  // Handle adding or updating a journal entry
   const handleNewEntry = async (entry: JournalEntry) => {
     try {
       const res = await fetch("/api/auth/journal", {
@@ -37,7 +41,7 @@ export default function Journal({ initialEntries }: JournalProps) {
       }
 
       if (entry.id) {
-        setEntries(entries.map(e => e.id === entry.id ? responseData : e));
+        setEntries(entries.map((e) => (e.id === entry.id ? responseData : e)));
         Swal.fire("Updated!", "Your journal entry has been updated!", "success");
       } else {
         setEntries([...entries, responseData]);
@@ -54,6 +58,7 @@ export default function Journal({ initialEntries }: JournalProps) {
     setEntryToEdit(entry);
   };
 
+  // Handle deleting a journal entry
   const handleDeleteEntry = async (id: string) => {
     try {
       const res = await fetch("/api/auth/journal", {
@@ -68,21 +73,22 @@ export default function Journal({ initialEntries }: JournalProps) {
         return;
       }
 
-      setEntries(entries.filter(entry => entry.id !== id));
+      setEntries(entries.filter((entry) => entry.id !== id));
       Swal.fire("Deleted!", "Your journal entry has been deleted!", "success");
     } catch (error) {
       console.error("Fetch error:", error);
     }
   };
 
+  // Fetch journal entries
   useEffect(() => {
     const fetchJournals = async () => {
       try {
-        const res = await fetch('/api/auth/journal');
+        const res = await fetch("/api/auth/journal");
         const data = await res.json();
         setEntries(data);
       } catch (error) {
-        console.error('Error fetching journals:', error);
+        console.error("Error fetching journals:", error);
       }
     };
 
@@ -91,33 +97,37 @@ export default function Journal({ initialEntries }: JournalProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-100 to-indigo-100 flex flex-col items-center py-12">
-      <main className="w-full max-w-6xl px-6">
+      <main className="w-full max-w-7xl px-6">
         {/* Header Section */}
         <div className="flex justify-between items-center mb-10">
           <h1 className="text-4xl font-extrabold text-gray-900">My Journal</h1>
-          <button 
-            onClick={() => signOut({ callbackUrl: "/" })} 
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
             className="px-5 py-2.5 bg-red-500 hover:bg-red-600 transition text-white font-semibold rounded-lg shadow-lg"
           >
             Logout
           </button>
         </div>
-    
-        {/* Content Grid*/}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          {/* New Entry Form*/}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-[500px]">
-            <h2 className="text-3xl font-semibold text-gray-900 mb-6">{entryToEdit ? 'Edit Entry' : 'New Entry'}</h2>
+
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-10">
+          {/* New Entry Form */}
+          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-[600px]">
+            <h2 className="text-3xl font-semibold text-gray-900 mb-6">
+              {entryToEdit ? "Edit Entry" : "New Entry"}
+            </h2>
             <JournalForm onSubmit={handleNewEntry} entryToEdit={entryToEdit} />
           </div>
-    
-          {/* Entries List*/}
-          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-[500px] overflow-y-auto">
+
+          {/* Entries List */}
+          <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-[600px] overflow-y-auto">
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-semibold text-gray-900">My Entries</h2>
+              <h2 className="text-3xl font-semibold text-gray-900">
+                My Entries
+              </h2>
               <select
                 value={filter}
-                onChange={(e) => setFilter(e.target.value)}
+                onChange={(e) => setFilter(e.target.value)} // Update filter state
                 className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 text-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               >
                 <option value="">All Categories</option>
@@ -127,8 +137,18 @@ export default function Journal({ initialEntries }: JournalProps) {
                 <option value="goals">Goals</option>
               </select>
             </div>
-            <JournalList entries={entries} filter={filter} onEdit={handleEditEntry} onDelete={handleDeleteEntry} />
+            <JournalList
+              entries={entries} // Pass filtered entries
+              filter={filter}
+              onEdit={handleEditEntry}
+              onDelete={handleDeleteEntry}
+            />
           </div>
+        </div>
+
+        {/* Journal Summary */}
+        <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full">
+          <JournalSummary entries={entries} />
         </div>
       </main>
     </div>
