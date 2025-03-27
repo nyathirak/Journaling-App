@@ -56,9 +56,7 @@ export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200 w-full h-auto overflow-y-auto">
-      <h2 className="text-3xl font-semibold text-gray-900 mb-6">Journal Summary</h2>
-
+    <div className="p-8 bg-transparent w-full">
       {/* Period Selector */}
       <div className="mb-6">
         <label htmlFor="period" className="text-lg font-medium text-gray-700 mr-4">

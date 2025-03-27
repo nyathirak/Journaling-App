@@ -3,7 +3,8 @@ import { signOut } from "next-auth/react";
 import Swal from "sweetalert2";
 import JournalForm from "../components/JournalForm";
 import JournalList from "../components/JournalList";
-import JournalSummary from "../components/JournalSummary";
+import { useSession } from "next-auth/react";
+import Sidebar from "../components/Sidebar";
 
 // Interface defining the structure of a journal entry
 interface JournalEntry {
@@ -21,6 +22,7 @@ interface JournalProps {
 }
 
 export default function Journal({ initialEntries }: JournalProps) {
+  const { data: session } = useSession();
   const [entries, setEntries] = useState<JournalEntry[]>(initialEntries);
   const [filter, setFilter] = useState<string>("");
   const [entryToEdit, setEntryToEdit] = useState<JournalEntry | null>(null);
@@ -96,40 +98,28 @@ export default function Journal({ initialEntries }: JournalProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 to-indigo-100 flex flex-col items-center py-6">
-      <main className="w-full max-w-7xl">
-        {/* Header Section */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-900">My Journal</h1>
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 transition text-white font-semibold rounded-lg shadow-lg"
-          >
-            Logout
-          </button>
-        </div>
+    <div className="flex h-screen bg-white">
+      {/* Sidebar */}
+      <Sidebar />
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 mb-8">
+      <main className="flex-1 p-10">
+        <h2 className="text-3xl text-black font-semibold mb-6"> 
+          {entryToEdit ? "Edit Entry" : "New Entry"}
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8">
           {/* New Entry Form */}
-          <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200 w-full h-[600px]">
-            <h2 className="text-3xl font-semibold text-gray-900 mb-4">
-              {entryToEdit ? "Edit Entry" : "New Entry"}
-            </h2>
+          <div className="bg-white w-full text-black">
             <JournalForm onSubmit={handleNewEntry} entryToEdit={entryToEdit} />
           </div>
 
           {/* Entries List */}
-          <div className="bg-white rounded-2xl shadow-2xl p-6 border border-gray-200 w-full h-[600px] overflow-y-auto">
+          <div className="bg-white w-full text-black">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-3xl font-semibold text-gray-900">
-                My Entries
-              </h2>
               <select
                 value={filter}
-                onChange={(e) => setFilter(e.target.value)} // Update filter state
-                className="border border-gray-300 rounded-md px-3 py-2 text-gray-700 text-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              >
+                onChange={(e) => setFilter(e.target.value)}
+                className="bg-white w-full h-full">
                 <option value="">All Categories</option>
                 <option value="personal">Personal</option>
                 <option value="work">Work</option>
@@ -138,19 +128,15 @@ export default function Journal({ initialEntries }: JournalProps) {
               </select>
             </div>
             <JournalList
-              entries={entries} // Pass filtered entries
+              entries={entries}
               filter={filter}
               onEdit={handleEditEntry}
               onDelete={handleDeleteEntry}
             />
           </div>
         </div>
-
-        {/* Journal Summary */}
-        <div className="p-0 w-full">
-          <JournalSummary entries={entries} />
-        </div>
       </main>
-    </div>
+</div>
+
   );
 }

@@ -27,7 +27,7 @@ export default function Home() {
           </div>
           {/* Mobile Menu Button */}
           <div className="flex lg:hidden">
-            <button type="button" className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onClick={() => setMenuOpen(!menuOpen)}> 
+            <button type="button" className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700" onClick={() => setMenuOpen(!menuOpen)} >
                 <span className="sr-only">Open main menu</span>
                 <svg
                   className="size-6"
@@ -43,7 +43,7 @@ export default function Home() {
                     strokeLinejoin="round"
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                   />
-                </svg>
+              </svg>
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
@@ -149,8 +149,7 @@ export default function Home() {
               Your Personal Crash Out Space
             </h1>
             <p className="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
-            Journal your way to peace, one vent at a time
-              
+              Journal your way to peace, one vent at a time
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <a
@@ -159,7 +158,6 @@ export default function Home() {
               >
                 Create Your Journal
               </a>
-              
             </div>
           </div>
         </div>

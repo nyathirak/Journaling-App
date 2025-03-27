@@ -41,7 +41,7 @@ export default function JournalList({
   };
 
   return (
-    <div className="space-y-6 max-h-[500px]">
+   <div className="space-y-6 max-h-[500px] overscroll-y-auto overflow-y-scroll scrollbar-hide">
       {/* Display a message if there are no filtered entries */}
       {filteredEntries.length === 0 ? (
         <div className="text-center py-8 text-red-500 text-md font-semibold">
@@ -71,7 +71,6 @@ export default function JournalList({
             >
               {entry.category}
             </div>
-            <p className="whitespace-pre-wrap text-black">{entry.content}</p>
             {/* Action buttons for editing and deleting the entry */}
             <div className="flex justify-end space-x-4 mt-4">
               <button
