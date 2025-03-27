@@ -21,23 +21,31 @@ interface JournalSummaryProps {
 }
 
 export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('365');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>("365");
 
-  // Filter entries based on the selected period
   const now = new Date();
+  const startDate = new Date();
+  startDate.setDate(now.getDate() - parseInt(selectedPeriod, 10));
+
+  // Filter entries within selected period
   const filteredEntries = entries.filter((entry) => {
     const entryDate = new Date(entry.date);
-    const daysDifference = (now.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24);
-    return daysDifference <= parseInt(selectedPeriod, 10);
+    return entryDate >= startDate && entryDate <= now;
   });
 
-  // Map entries to heatmap data
-  const heatmapData = filteredEntries.map((entry) => ({
-    date: new Date(entry.date).toISOString().split('T')[0],
-    count: 1,
+  // Aggregate heatmap data (group by date)
+  const heatmapData: Record<string, number> = {};
+  filteredEntries.forEach((entry) => {
+    const dateKey = entry.date.split("T")[0];
+    heatmapData[dateKey] = (heatmapData[dateKey] || 0) + 1;
+  });
+
+  const heatmapValues = Object.keys(heatmapData).map((date) => ({
+    date,
+    count: heatmapData[date],
   }));
 
-  // Calculate category distribution
+  // Category distribution
   const categoryCounts = filteredEntries.reduce((acc: Record<string, number>, entry) => {
     acc[entry.category] = (acc[entry.category] || 0) + 1;
     return acc;
@@ -47,9 +55,9 @@ export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
     labels: Object.keys(categoryCounts),
     datasets: [
       {
-        label: 'Category Distribution',
+        label: "Category Distribution",
         data: Object.values(categoryCounts),
-        backgroundColor: ['#c6e48b', '#7bc96f', '#239a3b', '#196127'],
+        backgroundColor: ["#c6e48b", "#7bc96f", "#239a3b", "#196127"],
         borderWidth: 1,
       },
     ],
@@ -70,38 +78,39 @@ export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
           <option value="365">Last Year</option>
         </select>
       </div>
-      <CalendarHeatmap
-          startDate={new Date(new Date().setDate(now.getDate() - parseInt(selectedPeriod, 10)))}
-          endDate={now}
-          values={heatmapData}
-          classForValue={(value) => {
-            if (!value) return 'color-empty';
-            return `color-scale-${Math.min(value.count, 4)}`;
-          }}
-          tooltipDataAttrs={(value): TooltipDataAttrs => {
-            if (!value || !value.date) {
-              return { 'data-tooltip': 'No entries' } as TooltipDataAttrs;
-            }
-            return { 'data-tooltip': `${value.date}: ${value.count} entry(ies)` } as unknown as TooltipDataAttrs;
-          }}
-          showWeekdayLabels
-        />
 
-      {/* Category Distribution Bar Graph */}
-      <div className="mb-8">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">Category Distribution</h3>
-          <div className="w-[700px] h-[300px] mx-auto">
-            <Bar 
-              data={categoryData} 
-              options={{ 
-                responsive: true, 
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top' } } 
-              }} 
-            />
+      {/* Heatmap */}
+      <CalendarHeatmap
+        startDate={startDate}
+        endDate={now}
+        values={heatmapValues}
+        classForValue={(value) => {
+          if (!value) return "color-empty";
+          return `color-scale-${Math.min(value.count, 4)}`;
+        }}
+        tooltipDataAttrs={(value): TooltipDataAttrs => {
+          if (!value || !value.date) {
+            return { 'data-tooltip': 'No entries' } as TooltipDataAttrs;
+          }
+          return { 'data-tooltip': `${value.date}: ${value.count} entry(ies)` } as unknown as TooltipDataAttrs;
+        }}
+        showWeekdayLabels
+      />
+
+      {/* Bar Chart */}
+      <div className="mt-8">
+        <h3 className="text-xl font-bold text-gray-800 mb-4">Category Distribution</h3>
+        <div className="w-full h-[300px]">
+          <Bar
+            data={categoryData}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: { legend: { position: "top" } },
+            }}
+          />
         </div>
       </div>
-
     </div>
   );
 }

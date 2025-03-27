@@ -3,6 +3,7 @@ import { signOut } from "next-auth/react";
 import Swal from "sweetalert2";
 import JournalForm from "../components/JournalForm";
 import JournalList from "../components/JournalList";
+import JournalSummary from "../components/JournalSummary";
 import { useSession } from "next-auth/react";
 import Sidebar from "../components/Sidebar";
 

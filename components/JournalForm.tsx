@@ -39,7 +39,6 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
     setEntry({ ...entry, title: '', content: '', category: 'personal' });
   };
 
-
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Title input field */}
@@ -90,12 +89,6 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
             className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200 h-40 resize-none"
             required
           />
-          {/* <ReactQuill
-            value={entry.content}
-            id="content"
-            onChange={(value) => setEntry({ ...entry, content: value })}
-            theme="snow"
-          /> */}
 
         </div>
        
