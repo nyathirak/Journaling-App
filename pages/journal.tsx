@@ -98,7 +98,7 @@ export default function Journal({ initialEntries }: JournalProps) {
   }, []);
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex min-h-screen bg-white">
       {/* Sidebar */}
       <Sidebar />
 
@@ -107,7 +107,7 @@ export default function Journal({ initialEntries }: JournalProps) {
           {entryToEdit ? "Edit Entry" : "New Entry"}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-8">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-2 mb-8">
           {/* New Entry Form */}
           <div className="bg-white w-full text-black">
             <JournalForm onSubmit={handleNewEntry} entryToEdit={entryToEdit} />

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
@@ -89,11 +90,16 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
             className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200 h-40 resize-none"
             required
           />
-          
+          {/* <ReactQuill
+            value={entry.content}
+            id="content"
+            onChange={(value) => setEntry({ ...entry, content: value })}
+            theme="snow"
+          /> */}
+
         </div>
        
       </div>
-
       {/* Submit Button */}
       <button
         type="submit"

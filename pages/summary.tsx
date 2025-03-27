@@ -4,7 +4,7 @@ import JournalSummary from "../components/JournalSummary";
 import { useSession } from "next-auth/react";
 
 // Interface defining the structure of a journal entry
-interface JournalEntry {
+interface JournalSummary {
   id: string;
   userId: number;
   title: string;
@@ -13,13 +13,13 @@ interface JournalEntry {
   date: string;
 }
 
-interface JournalProps {
-  initialEntries: JournalEntry[];
+interface JournalSummaryProps {
+  entries: JournalSummary[];
 }
 
-export default function Summary({ initialEntries }: JournalProps) {
+export default function Summary({ entries }: JournalSummaryProps) {
   const { data: session } = useSession();
-  const [entries, setEntries] = useState<JournalEntry[]>(initialEntries);
+  // const [entries, setEntries] = useState<JournalEntry[]>(entries);
 
   return (
     <div className="flex min-h-screen bg-white">

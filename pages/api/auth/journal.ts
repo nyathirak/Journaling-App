@@ -33,7 +33,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     const userId = decoded.userId;
-    console.log("Token User ID:", userId);
 
     if (req.method === 'GET') {
         try {
