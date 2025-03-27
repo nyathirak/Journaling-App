@@ -115,7 +115,7 @@ export default function Journal({ initialEntries }: JournalProps) {
 
           {/* Entries List */}
           <div className="bg-white w-full text-black">
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-4 focus:ring-2 focus:ring-pink-500 focus:outline-none">
               <select
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}

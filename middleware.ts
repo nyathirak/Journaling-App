@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
 
   // Define protected routes
-  const protectedRoutes = ["/journal", "/dashboard", "/settings"];
+  const protectedRoutes = ["/journal", "/summary", "/settings"];
 
   // Check if the current request URL is a protected route
   const isProtected = protectedRoutes.some((route) =>
@@ -22,5 +22,5 @@ export function middleware(req: NextRequest) {
 
 // Apply middleware only to protected routes
 export const config = {
-  matcher: ["/journal/:path*", "/dashboard/:path*", "/settings/:path*"],
+  matcher: ["/journal/:path*", "/summary/:path*", "/settings/:path*"],
 };

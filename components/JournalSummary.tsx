@@ -56,28 +56,21 @@ export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
   };
 
   return (
-    <div className="p-8 bg-transparent w-full">
+    <div className="p-6 bg-white rounded-lg shadow-md">
       {/* Period Selector */}
-      <div className="mb-6">
-        <label htmlFor="period" className="text-lg font-medium text-gray-700 mr-4">
-          Select Period:
-        </label>
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-bold text-pink-800 mt-0">Writing Consistency</h3>
         <select
           id="period"
           value={selectedPeriod}
           onChange={(e) => setSelectedPeriod(e.target.value)}
-          className="border border-gray-300 rounded-md px-4 py-2 text-gray-700 text-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          className="px-4 py-2 text-black text-sm focus:ring-2 focus:ring-pink-500 rounded-md"
         >
-          <option value="7">Last 7 Days</option>
           <option value="30">Last 30 Days</option>
           <option value="365">Last Year</option>
         </select>
       </div>
-
-      {/* Heatmap for showing days with entries */}
-      <div className="mb-8">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Writing Consistency</h3>
-        <CalendarHeatmap
+      <CalendarHeatmap
           startDate={new Date(new Date().setDate(now.getDate() - parseInt(selectedPeriod, 10)))}
           endDate={now}
           values={heatmapData}
@@ -93,13 +86,22 @@ export default function JournalSummary({ entries = [] }: JournalSummaryProps) {
           }}
           showWeekdayLabels
         />
-      </div>
 
       {/* Category Distribution Bar Graph */}
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-gray-800 mb-4">Category Distribution</h3>
-        <Bar data={categoryData} options={{ responsive: true, plugins: { legend: { position: 'top' } } }} />
+          <h3 className="text-xl font-bold text-gray-800 mb-4">Category Distribution</h3>
+          <div className="w-[700px] h-[300px] mx-auto">
+            <Bar 
+              data={categoryData} 
+              options={{ 
+                responsive: true, 
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'top' } } 
+              }} 
+            />
+        </div>
       </div>
+
     </div>
   );
 }

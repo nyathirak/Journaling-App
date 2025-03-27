@@ -169,15 +169,6 @@ const LoginPage = () => {
                     Sign in
                   </button>
                 </div>
-
-                <div>
-                  <button
-                    type="button"
-                    className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                  >
-                    Sign in with Google
-                  </button>
-                </div>
               </form>
             ) : (
               <form className="space-y-6" onSubmit={handleSignup}>
@@ -259,15 +250,6 @@ const LoginPage = () => {
                     className="flex w-full justify-center rounded-md bg-pink-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-pink-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-600"
                   >
                     Register
-                  </button>
-                </div>
-
-                <div>
-                  <button
-                    type="button"
-                    className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                  >
-                    Sign up with Google
                   </button>
                 </div>
               </form>

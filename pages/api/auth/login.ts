@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         path: '/',
-        maxAge: 3600, // 1 hour
+        maxAge: 7200,
     }));
 
     res.status(200).json({ user: { email: user.email, name: user.name } });

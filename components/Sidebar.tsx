@@ -1,4 +1,4 @@
-import { FiHome, FiSettings } from "react-icons/fi";
+import { FiBookmark, FiHome, FiPenTool, FiSettings } from "react-icons/fi";
 import { MdExplore } from "react-icons/md";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react"; // Import signOut for logout functionality
@@ -34,7 +34,7 @@ export default function Sidebar() {
               : "text-gray-600 hover:text-pink-700"
           }`}
         >
-          <FiHome /> <span>Create Journal</span>
+          <FiPenTool/> <span>Create Journal</span>
         </a>
         <a
           href="/summary"
@@ -44,7 +44,7 @@ export default function Sidebar() {
               : "text-gray-600 hover:text-pink-700"
           }`}
         >
-          <MdExplore /> <span>Summary</span>
+          <FiBookmark/> <span>Summary</span>
         </a>
         <a
           href="/settings"
@@ -61,26 +61,6 @@ export default function Sidebar() {
 
       {/* Logout Button */}
       <div className="mt-auto">
-      <button
-        onClick={() => router.push("/settings")}
-        className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M5.121 17.804A4 4 0 017 16h10a4 4 0 011.879.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-          />
-        </svg>
-        {session?.user?.email}
-      </button>
         <button
           onClick={() => signOut({ callbackUrl: "/" })}
           className="px-4 py-2 bg-red-500 hover:bg-red-600 transition text-white font-semibold rounded-lg shadow-lg"

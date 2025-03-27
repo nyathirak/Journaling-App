@@ -1,4 +1,4 @@
 import NextAuth from "next-auth";
-import { authOptions } from "../../../lib/auth"; // Ensure the path is correct
+import { authOptions } from "../../../lib/auth";
 
 export default NextAuth(authOptions);

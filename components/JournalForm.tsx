@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 
-// Interface defining the structure of a journal entry
 interface JournalEntry {
-  id: string; 
+  id: string;
   userId: number;
-  title: string; 
+  title: string;
   content: string;
   category: string;
   date: string;
 }
 
-// Props interface for the JournalForm component
 interface JournalFormProps {
   onSubmit: (entry: JournalEntry) => void;
   entryToEdit?: JournalEntry | null;
 }
 
 export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps) {
-
-  // Managing state entry being created or edited
   const [entry, setEntry] = useState<JournalEntry>({
     id: '',
     userId: 0,
@@ -35,13 +31,13 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
     }
   }, [entryToEdit]);
 
-  // Function to handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(entry);
-    Swal.fire("Success!", "Your journal entry has been saved!", "success");
+    Swal.fire('Success!', 'Your journal entry has been saved!', 'success');
     setEntry({ ...entry, title: '', content: '', category: 'personal' });
   };
+
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -70,7 +66,7 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
           id="category"
           value={entry.category}
           onChange={(e) => setEntry({ ...entry, category: e.target.value })}
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:text-pink focus:ring-pink-500 transition duration-200"
+          className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200"
         >
           <option value="personal">Personal</option>
           <option value="work">Work</option>
@@ -78,20 +74,27 @@ export default function JournalForm({ onSubmit, entryToEdit }: JournalFormProps)
           <option value="goals">Goals</option>
         </select>
       </div>
+
+      {/* Textarea with Emoji Picker */}
       <div>
         <label htmlFor="content" className="block text-sm font-medium text-black mb-1">
           Your Thoughts
         </label>
-        <textarea
-          id="content"
-          placeholder="Write your thoughts here..."
-          value={entry.content}
-          onChange={(e) => setEntry({ ...entry, content: e.target.value })}
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200 h-40 resize-none"
-          required
-        />
+        <div className="relative">
+          <textarea
+            id="content"
+            placeholder="Write your thoughts here..."
+            value={entry.content}
+            onChange={(e) => setEntry({ ...entry, content: e.target.value })}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-black focus:outline-none focus:ring-2 focus:ring-pink-500 transition duration-200 h-40 resize-none"
+            required
+          />
+          
+        </div>
+       
       </div>
-      {/* Dynamic Submit/Edit button */}
+
+      {/* Submit Button */}
       <button
         type="submit"
         className="w-full px-6 py-3 rounded-lg bg-gradient-to-r from-pink-500 to-indigo-500 text-white font-medium hover:from-pink-600 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2 transform transition duration-200 hover:scale-[1.02]"

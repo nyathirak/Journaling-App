@@ -28,7 +28,6 @@ export default function Summary({ initialEntries }: JournalProps) {
 
       {/* Main Content */}
       <main className="flex-1 p-10">
-        <h2 className="text-3xl text-black font-semibold mb-6">Summary</h2>
         {/* Pass entries to JournalSummary */}
         <JournalSummary entries={entries} />
       </main>
