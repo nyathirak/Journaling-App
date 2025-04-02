@@ -1,4 +1,4 @@
-# 📖 Personal Journaling App - README
+# 📖 Personal Journaling App
 
 Welcome to the **CK's Personal Journaling App**! 🚀 This app is designed to help users jot down their thoughts, categorize entries, and gain insights into their journaling habits. Built with **Next.js** and **TypeScript**, it offers a secure and user-friendly experience. Let's dive in! 🎯
 
@@ -169,6 +169,9 @@ npm run dev
 
 ## 🎉 Conclusion
 This **Personal Journaling App** is a secure, modern, and feature-rich solution for journaling 💻✨
+
+![alt text](image.png)
+
 
 🚀 **Contributions & Feedback Welcome!** 📝
 
